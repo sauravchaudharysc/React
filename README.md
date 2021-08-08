@@ -147,6 +147,10 @@ Such function are called pure because they do not attempt to change their inputs
 
 Here , we make the `Clock` component truly reusable and encapsulated. It will set up its own timer and update itself every second.
 
+#### Why State ?
+
+Consider the ticking clock example from one of the previous sections. To update the UI we are calling ReactDOM.render() each second to change the rendered output.
+
 ![image-20210805175323918](images\image-20210805175323918.png)
 
 However, it misses a crucial requirement: the fact that the `Clock` sets up a timer and updates the UI every second should be an implementation detail of the `Clock`.
@@ -366,5 +370,163 @@ ReactDOM.render(<Football />, document.getElementById('root'));
 If you want to send parameters into an event handler, you have two options:
 
 1. Make an anonymous arrow function:
-2.  Bind the event handler to `this`.
+2. Bind the event handler to `this`.
+
+### 7. Conditional Rendering
+
+Conditional rendering in React works the same way conditions work in JavaScript.
+
+In React, you can create distinct components that encapsulate behavior you need. Then, you can render only some of them, depending on the state of your application.
+
+In this example we’ll create a Greeting component that displays either of these component depending on whether a user is logged in:
+
+![image-20210807063841073](images\image-20210807063841073.png)
+
+In the example below, we will create a stateful component called `LoginControl` . It will render either `<LoginButton />` or `<LogoutButton />` depending on its current state.
+
+![image-20210807065111759](images\image-20210807065111759.png)
+
+   **JS Code:**
+
+```react
+class LoginControl extends React.Component {
+  constructor(props) {
+    super(props);
+    this.handleLoginClick = this.handleLoginClick.bind(this);
+    this.handleLogoutClick = this.handleLogoutClick.bind(this);
+    this.state = {isLoggedIn: false};
+  }
+
+  handleLoginClick() {
+    this.setState({isLoggedIn: true});
+  }
+
+  handleLogoutClick() {
+    this.setState({isLoggedIn: false});
+  }
+
+  render() {
+    const isLoggedIn = this.state.isLoggedIn;
+    let button;
+
+    if (isLoggedIn) {
+      button = <LogoutButton onClick={this.handleLogoutClick} />;
+    } else {
+      button = <LoginButton onClick={this.handleLoginClick} />;
+    }
+
+    return (
+      <div>
+        <Greeting isLoggedIn={isLoggedIn} />
+        {button}
+      </div>
+    );
+  }
+}
+
+function UserGreeting(props) {
+  return <h1>Welcome back!</h1>;
+}
+
+function GuestGreeting(props) {
+  return <h1>Please sign up.</h1>;
+}
+
+function Greeting(props) {
+  const isLoggedIn = props.isLoggedIn;
+  if (isLoggedIn) {
+    return <UserGreeting />;
+  }
+  return <GuestGreeting />;
+}
+
+function LoginButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Login
+    </button>
+  );
+}
+
+function LogoutButton(props) {
+  return (
+    <button onClick={props.onClick}>
+      Logout
+    </button>
+  );
+}
+
+ReactDOM.render(
+  <LoginControl />,
+  document.getElementById('root')
+);
+```
+
+### 8. Lists & Keys
+
+#### Lists
+
+In JavaScript ,
+
+```javascript
+const numbers = [1, 2, 3, 4, 5];
+const doubled = numbers.map((number) => number * 2);
+```
+
+In React, transforming arrays into lists of elements is nearly identical. You can build collections of elements and include them in JSX using curly braces `{}`.
+
+```react
+const numbers = [1, 2, 3, 4, 5];
+const listItems = numbers.map((number) =>
+  <li>{number}</li>
+);
+```
+
+![image-20210807125806668](images\image-20210807125806668.png)
+
+If we want to render lists inside a component.
+
+We can reconstruct the previous example into a component that accepts an array of `numbers` and outputs a list of elements.
+
+```react
+function NumberList(props) {
+  const numbers = props.numbers;
+  const listItems = numbers.map((number) =>
+    <li>{number}</li>
+  );
+  return (
+    <ul>{listItems}</ul>
+  );
+}
+
+const numbers = [1, 2, 3, 4, 5];
+ReactDOM.render(
+  <NumberList numbers={numbers} />,
+  document.getElementById('root')
+);
+```
+
+On executing this code, we’ll be given a warning that a key should be provided for list items. A “key” is a special string attribute when creating list of elements.
+
+**Let’s assign a `key` to our list items inside `numbers.map()` and fix the missing key issue.**
+
+```react
+<li key={number.toString()}>
+```
+
+#### Keys
+
+Keys help React identify which items have changed, are added, or are removed. Keys should be given to the elements inside the array to give the elements a stable identity.
+
+Keys used within arrays should be unique among their siblings. However, they don’t need to be globally unique. We can use the same keys when we produce two different arrays.
+
+JSX allows embedding any expression in curly braces so we could inline the map() result:
+
+![image-20210808081124420](images\image-20210808081124420.png)
+
+### 9. Forms
+
+HTML form elements work a bit differently from other DOM elements in React, because form elements naturally keep some internal state. 
+
+It’s convenient to have a JavaScript function that handles the submission of the form and has access to the data that the user entered into the form. The standard way to achieve this is with a technique called “controlled components”.
 
