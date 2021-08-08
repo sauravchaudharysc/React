@@ -20,7 +20,7 @@ Open Settings and these Configuration :
   - https://unpkg.com/react/umd/react.development.js
   - https://unpkg.com/react-dom/umd/react-dom.development.js
 
-![image-20210805122749960](images\image-20210805122749960.png)
+![image-20210805122749960](images/image-20210805122749960.png)
 
 ## Main Concepts
 
@@ -35,7 +35,7 @@ ReactDOM.render(
 );
 ```
 
-![image-20210805122413214](images\image-20210805122413214.png)
+![image-20210805122413214](images/image-20210805122413214.png)
 
 ### 2. Introducing JSX
 
@@ -49,7 +49,7 @@ Instead of artificially separating technologies by putting markup and logic in s
 
 In the example below, we embed the result of calling a JavaScript function, `formatName(user)`, into an `<h1>` element.
 
-![image-20210805124425603](images\image-20210805124425603.png)
+![image-20210805124425603](images/image-20210805124425603.png)
 
 ### 3. Rendering Elements
 
@@ -66,7 +66,7 @@ ReactDOM.render(element, document.getElementById('root'));
 
 React elements are [immutable](https://en.wikipedia.org/wiki/Immutable_object). Once you create an element, you can’t change its children or attributes. So the only way to update the UI is to create a new element.
 
-![image-20210805130246549](images\image-20210805130246549.png)
+![image-20210805130246549](images/image-20210805130246549.png)
 
 ### 4. Components 
 
@@ -112,7 +112,7 @@ When React sees an element representing a user-defined component, it passes JSX 
 
 This code renders “Hello, Ranvijay” on the page:
 
-![image-20210805165700913](images\image-20210805165700913.png)
+![image-20210805165700913](images/image-20210805165700913.png)
 
 Let’s recap what happens in this example :
 
@@ -151,7 +151,7 @@ Here , we make the `Clock` component truly reusable and encapsulated. It will se
 
 Consider the ticking clock example from one of the previous sections. To update the UI we are calling ReactDOM.render() each second to change the rendered output.
 
-![image-20210805175323918](images\image-20210805175323918.png)
+![image-20210805175323918](images/image-20210805175323918.png)
 
 However, it misses a crucial requirement: the fact that the `Clock` sets up a timer and updates the UI every second should be an implementation detail of the `Clock`.
 
@@ -195,7 +195,7 @@ Now Clock is a class rather than a function.
 
 The render method will be called each time an update happens.
 
-![image-20210805181459303](images\image-20210805181459303.png)
+![image-20210805181459303](images/image-20210805181459303.png)
 
 #### Adding Local State to a Class
 
@@ -206,7 +206,7 @@ We will move the `date` from props to state in three steps:
 2. Add a class constructor that assigns the initial `this.state`.
 3. Remove the `date` prop from the `<Clock />` element
 
-![image-20210805182333770](images\image-20210805182333770.png)
+![image-20210805182333770](images/image-20210805182333770.png)
 
 *Next we’ll make the Clock set up its own timer and update itself every second.*
 
@@ -312,11 +312,11 @@ React event handlers are written inside curly braces:
 
 `onClick={shoot}` instead of `onClick="shoot()"`.
 
-![image-20210805212657222](images\image-20210805212657222.png)
+![image-20210805212657222](images/image-20210805212657222.png)
 
 **A good practice is to put the event handler as a method in the component class.**
 
-![image-20210805213154794](images\image-20210805213154794.png)
+![image-20210805213154794](images/image-20210805213154794.png)
 
 For methods in React, the `this` keyword should represent the component that owns the method.
 
@@ -380,11 +380,11 @@ In React, you can create distinct components that encapsulate behavior you need.
 
 In this example we’ll create a Greeting component that displays either of these component depending on whether a user is logged in:
 
-![image-20210807063841073](images\image-20210807063841073.png)
+![image-20210807063841073](images/image-20210807063841073.png)
 
 In the example below, we will create a stateful component called `LoginControl` . It will render either `<LoginButton />` or `<LogoutButton />` depending on its current state.
 
-![image-20210807065111759](images\image-20210807065111759.png)
+![image-20210807065111759](images/image-20210807065111759.png)
 
    **JS Code:**
 
@@ -482,7 +482,7 @@ const listItems = numbers.map((number) =>
 );
 ```
 
-![image-20210807125806668](images\image-20210807125806668.png)
+![image-20210807125806668](images/image-20210807125806668.png)
 
 If we want to render lists inside a component.
 
@@ -522,7 +522,7 @@ Keys used within arrays should be unique among their siblings. However, they don
 
 JSX allows embedding any expression in curly braces so we could inline the map() result:
 
-![image-20210808081124420](images\image-20210808081124420.png)
+![image-20210808081124420](images/image-20210808081124420.png)
 
 ### 9. Forms
 
